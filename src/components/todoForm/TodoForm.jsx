@@ -1,12 +1,24 @@
+import { useContext, useState } from "react";
+import todoContext from "../../context/todoContext";
 const TodoForm = () => {
+  const { addTodo } = useContext(todoContext);
+  const [todo, setTodo] = useState("");
+  const add = (e) => {
+    e.preventDefault();
+    setTodo("");
+    if (todo === "") return;
+    addTodo({ todo: todo, completed: false });
+  };
   return (
     <>
       <div style={styling.container}>
-        <form style={styling.form}>
+        <form style={styling.form} onSubmit={add}>
           <input
             style={styling.input}
             type="text"
             placeholder="write todos..."
+            value={todo}
+            onChange={(e) => setTodo(e.target.value)}
           />
           <button style={styling.button} type="submit">
             Add

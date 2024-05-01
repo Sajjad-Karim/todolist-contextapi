@@ -1,24 +1,58 @@
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
-const TodosList = () => {
+import todoContext from "../../context/todoContext";
+import { useContext, useState } from "react";
+const TodosList = ({ todo }) => {
+  const { updateTodo, deleteTodo, toggleCompleteTodo } =
+    useContext(todoContext);
+  const [editable, setEditable] = useState(false);
+  const [newMes, setNewMes] = useState(todo.todo);
+  const performEdit = () => {
+    setEditable(!editable);
+    updateTodo(todo.id, { ...todo, newMes: newMes });
+  };
+  const handleDelete = () => {
+    deleteTodo(todo.id);
+  };
+  const toogleComplete = () => {
+    toggleCompleteTodo(todo.id);
+  };
+
   return (
     <>
-      <div style={style.container}>
+      <div
+        style={{
+          ...style.container,
+          background: `${todo.completed ? "#2c2c2c" : "#333333"}`,
+        }}
+      >
         <div style={style.fieldContainer}>
-          <input type="checkbox" style={style.checkbox} />
+          <input
+            type="checkbox"
+            checked={todo.completed}
+            onChange={toogleComplete}
+          />
           <input
             type="type"
-            defaultValue="learn Dsa"
-            style={style.input}
-            readOnly
+            value={newMes}
+            style={{
+              ...style.input,
+              textDecoration: `${todo.completed ? "line-through" : "none"}`,
+            }}
+            readOnly={!editable}
+            onChange={(e) => setNewMes(e.target.value)}
           />
         </div>
         <div style={style.fieldContainer}>
-          <button style={style.btn}>
-            <CiEdit />
+          <button
+            style={style.btn}
+            onClick={performEdit}
+            disabled={todo.completed}
+          >
+            {editable ? <FaSave /> : <CiEdit />}
           </button>
-          <button style={style.btn}>
+          <button style={style.btn} onClick={handleDelete}>
             <MdDelete />
           </button>
         </div>
@@ -52,6 +86,8 @@ const style = {
     color: "white",
     outline: "none",
     padding: "5px 10px",
+    border: "1px solid black",
+    line: "through",
   },
   checkbox: {
     cursor: "pointer",
