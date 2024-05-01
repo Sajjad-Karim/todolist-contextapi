@@ -1,0 +1,49 @@
+const TodoForm = () => {
+  return (
+    <>
+      <div style={styling.container}>
+        <form style={styling.form}>
+          <input
+            style={styling.input}
+            type="text"
+            placeholder="write todos..."
+          />
+          <button style={styling.button} type="submit">
+            Add
+          </button>
+        </form>
+      </div>
+    </>
+  );
+};
+export default TodoForm;
+const styling = {
+  container: {},
+  form: {
+    width: "600px",
+    borderRadius: "5px",
+    height: "40px",
+    backgroundColor: "#333333",
+    display: "flex",
+    alignItems: "center",
+  },
+  input: {
+    height: "100%",
+    width: "90%",
+    border: "none",
+    outline: "none",
+    borderRadius: "5px",
+    background: "transparent",
+    boxSizing: "border-box",
+    padding: "5px 10px",
+    color: "white",
+  },
+  button: {
+    background: "#3d3d3d",
+    color: "white",
+    height: "100%",
+    fontweight: "bold",
+    width: "10%",
+    borderRadius: "0px 5px 5px 0px ",
+  },
+};
